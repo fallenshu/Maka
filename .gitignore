@@ -1,5 +1,5 @@
 .env
 .node_modules
 package-lock.json
-.ideas.txt
-.info.txt
+ideas.txt
+info.txt

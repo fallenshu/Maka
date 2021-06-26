@@ -1,0 +1,7 @@
+Name: Maka
+Db: mongo
+Desc: A mutliporpose bot but this time a good one.
+
+Theme: Purple, Blue, White
+
+Command Style: **Moderation**, Misc, Configuration, Information

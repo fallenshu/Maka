@@ -1,13 +1,21 @@
 
 const Discord = require("discord.js");
-const { prefix, m } = require("../config.json");
+const { m } = require("../config.json");
+const prefixSchema = require('../models/prefix')
 
 module.exports = {
     name: 'message',
     async execute(message, client) {
-        if (message.channel.type === "dm") {
-            return;
-          }
+      if (message.channel.type === "dm") {
+        return;
+      }
+
+
+      const d = await prefixSchema.findOne({
+        GuildID: message.guild.id
+      })
+
+      const prefix = d.Prefix
         
           if (!message.content.startsWith(prefix) || message.author.bot) return;
           const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -29,7 +37,7 @@ module.exports = {
         
           const now = Date.now();
           const timestamps = cooldowns.get(command.name);
-          const cooldownAmmount = (command.cooldown || 3) * 1000;
+          const cooldownAmmount = (command.cooldown || 1) * 1000;
         
           if (timestamps.has(message.author.id)) {
             const expirationTime = timestamps.get(message.author.id) + cooldownAmmount;
@@ -66,8 +74,18 @@ module.exports = {
               }
 
           }
+
+
+          if(command.disabled) {
+            if(message.author.id == '462936117596127232') {
+
+            } else {
+            return message.channel.send(`**${message.author.username}**, This command has been disabled by the developer`)
+            }
+          }
+          const p = d.Prefix
           try {
-            client.commands.get(command.name).execute(message, client, args);
+            client.commands.get(command.name).execute(message, client, args, p);
           } catch (err) {
             console.log(err);
         

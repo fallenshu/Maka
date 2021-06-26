@@ -1,13 +1,8 @@
 
 module.exports = {
-    name: 'test',
-    desc: 'Tets  commands',
-    category: 'Testing',
-    usage: 'test',
-    example: 'test',
-    aliases: ['pp','ppp'],
-    ownerOnly: true,
+    name : 'test',
     async execute(message, client, args) {
-        message.reply(`PP`)
+
+        console.log(`Created Data`)
     }
 }

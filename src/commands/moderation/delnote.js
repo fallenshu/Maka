@@ -1,15 +1,16 @@
-const warnSchema = require('../../models/warn')
+const warnSchema = require('../../models/note')
 const Discord = require('discord.js')
 const { m } = require('../../config.json')
 const main = m
 
 module.exports = {
-    name: 'delwarn',
-    usage: 'delwarn <user> <warnID>',
-    desc: "Delete a warning from a user.",
+    name: 'delnote',
+    usage: 'delnote <user> <note ID>',
+    desc: "Delete a note from a user.",
     category: 'Moderation',
     async execute(message, client, args, p) {
-        if(message.member.hasPermission('KICK_MEMBERS')) {
+        message.delete({ timeout: 100 })
+        if(message.member.hasPermission('ADMINISTRATOR')) {
             message.delete({ timeout: 100 })
 
         const user = message.mentions.users.first() ||  message.guild.members.cache.get(args[0]) 
@@ -27,7 +28,7 @@ module.exports = {
 
 
             if(!args[1]) {
-                return message.channel.send(`**${message.author.username}**, Please mention a user then warn ID. • Warn ID(s) can be found by doing \`${p}warns <user>\``)
+                return message.channel.send(`**${message.author.username}**, Please mention a user then note ID. • Note ID(s) can be found by doing \`${p}notes <user>\``)
             }
 
             if(!args[0] === user.toString()) {
@@ -36,18 +37,16 @@ module.exports = {
 
 
             await warnSchema.updateOne({
-                $pull: {"Warns": {"WarnID": `${args[1]}`}}
+                $pull: {"Notes": {"ID": `${args[1]}`}}
             })
 
-            message.channel.send(`Deleted warn \`${args[1]}\` from **${message.guild.members.cache.get(user.id).user.tag}**`)
+            message.channel.send(`Deleted note \`${args[1]}\` from **${message.guild.members.cache.get(user.id).user.tag}**`)
            
         } else if(!data) {
-
-
             message.channel.send(`**${message.author.username}**, Could not find any data for ${message.guild.members.cache.get(user.id).user.tag}`)
         }
     } else {
-        return message.channel.send(`**${message.author.username}**, You are missing the \`KICK_MEMBERS\` permission that is needed to run this command.`)
+        return message.channel.send(`**${message.author.username}**, You are missing the \`ADMINISTRATOR\` permission that is needed to run this command.`)
     }
     }
 }

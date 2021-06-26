@@ -32,7 +32,7 @@ module.exports = {
 
                     const member = message.guild.member(target)
                     if (member.roles.highest.position >= message.guild.me.roles.highest.position)
-                     return message.channel.send(`**${message.author.username}**, Cant mute user that has a higher role than your or has the same role as you.`)
+                     return message.channel.send(`**${message.author.username}**, Cant mute user that has a higher role than you or has the same role as you.`)
                     if (member.roles.highest.position >= message.member.roles.highest.position) 
                     return message.channel.send(`**${message.author.username}**, Cant mute user that has a higher role than me or has the same role as me.`)
                 const user = message.guild.members.cache.get(target.id)

@@ -60,7 +60,7 @@ module.exports = {
 }
 
 function warnIDRandom() {
-    const ch = '1234567890qwertyuiopasdfghjklzxcvbnm-._';
+    const ch = '1234567890qwertyuiopasdfghjklzxcvbnm';
     let str = '';
     for (let index = 0; index <= 25; index++) {
       str += ch[Math.floor(Math.random() * ch.length)];

@@ -7,6 +7,7 @@ module.exports = {
   name: "muteconfig",
   aliases: ["mutesettings"],
   desc: "Setup mute & unmute for your server!",
+  category: 'Configuration',
   async execute(message, client, args, p) {
     const data = await muteSchema.findOne({
       GuildID: message.guild.id,

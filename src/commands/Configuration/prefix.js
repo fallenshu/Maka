@@ -7,7 +7,7 @@ module.exports = {
     desc: 'Set / remove the custom prefix',
     usage: 'prefix add <prefix> | prefix remove',
     example: 'prefix add ! | prefix remove',
-    category: 'Administrator',
+    category: 'Configuration',
     async execute(message, client, args, p) {
 
         const data = await prefixSchema.findOne({GuildID: message.guild.id})

@@ -1,8 +1,8 @@
 const ms = require('ms')
 const Discord = require('discord.js')
 const main = 'E6E6FA'
-const muteSchema = require('../../../models/userMuted')
-const mschema = require('../../../models/mute')
+const muteSchema = require('../../models/userMuted')
+const mschema = require('../../models/mute')
 
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
     desc: 'Permently / time mute a user!',
     category: 'Moderation',
     disabled: true,
-    async execute(message, client, args) {
+    async execute(message, client, args, p) {
 
        
         if(message.member.hasPermission('KICK_MEMBERS')) {
@@ -45,12 +45,8 @@ module.exports = {
                     user.roles.add(d.MutedRole)
                     user.roles.remove(d.NormalRole)
                     
-                    const embed2 = new Discord.MessageEmbed()
-                    .setAuthor(`Muted Member.`)
-                    .setDescription(`Permanently muted user`)
-                    .setColor(main)
         
-                    message.channel.send(embed2)
+                    message.channel.send(`${user} has been permently muted.`)
         
                     
                 if(data) {
@@ -72,11 +68,7 @@ module.exports = {
                     user.roles.add(d.MutedRole)
                     user.roles.remove(d.NormalRole)
         
-                const embed = new Discord.MessageEmbed()
-                .setAuthor(`Muted Member.`)
-                .setDescription(`Muted member for ${args[1]}`)
-                .setColor(main)
-                message.channel.send(embed)
+                message.channel.send(`Muted ${user} for \`${args[1]}\``)
         
                 
                 if(data) {
@@ -92,8 +84,6 @@ module.exports = {
         
                 setTimeout(async () => {
         
-        
-        
                     user.roles.remove(d.MutedRole)
                     user.roles.add(d.NormalRole)
         
@@ -108,22 +98,14 @@ module.exports = {
                 
               
             } else if(!d) {
-                const noD = new Discord.MessageEmbed()
-                .setAuthor(`No data found!`)
-                .setDescription(`Please setup a muted role and a normal role \`muteconfig\``)
-                .setColor(main)
+ 
 
-                return message.channel.send(noD)
+                return message.channel.send(`**${message.author.username}**, I could not find any data for this server. • To setup a muted and member role please do \`${p}mutesettings\``)
             }
 
 
     } else {
-        const noPermis = new Discord.MessageEmbed()
-        .setAuthor(`Incorrect Permission`)
-        .setDescription(`You do not have the right permissions to run this command!`)
-        .setColor(main)
-    
-        return message.channel.send(noPermis)
+        return message.channel.send(`**${message.author.username}**, You are missing the \`KICK_MEMBERS\` permission that is needed to run this command.`)
     }
 } 
 }

@@ -1,8 +1,8 @@
 
 module.exports = {
     name : 'test',
-    async execute(message, client, args) {
+    async execute(message, client, args, p) {
 
-        console.log(`Created Data`)
+        console.log(`Working`)
     }
 }

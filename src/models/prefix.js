@@ -10,4 +10,4 @@ const prefixSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('Prefixs', prefixSchema)
+module.exports = mongoose.model('PrefixConfig', prefixSchema)

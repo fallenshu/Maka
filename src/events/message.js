@@ -1,48 +1,91 @@
 const Discord = require("discord.js");
-const { m } = require("../config.json");
 const prefixSchema = require("../models/prefix");
 const afk = require('../models/afk')
+const m = "6289e6";
+const suggestionsSchema = require("../models/suggestions");
 
 module.exports = {
   name: "message",
   async execute(message, client) {
-    if (message.channel.type === "dm") {
-      return;
-    }
-
-        /*- - - - - - - AFK STUFF - - - - - - -*/
-        const mentioned = message.mentions.members.first();
-        if (mentioned) {
-          const data = await afk.findOne({
-            UserID: mentioned.id,
-          });
-    
-          if (data) {
-            message.channel.send(
-              `**${mentioned.user.username}** is currently AFK. Reason: **${data.Reason}**`
-            );
-          }
-        }
-    
-        const mainData = await afk.findOne({
-          UserID: message.author.id,
-        });
-    
-        if (mainData) {
-          message.channel.send(
-            `**Welcome back!** I removed your AFK **${message.author.username}**.`
-          );
-          mainData.deleteOne({
-            UserID: message.author.id,
-          });
-        }
-        /*- - - - - - - AFK STUFF - - - - - - -*/
-
+        
     const d = await prefixSchema.findOne({
       GuildID: message.guild.id,
     });
 
     const prefix = d.Prefix;
+
+
+    if (message.channel.type === "dm") {
+      console.log("Inside DM event.");
+      client.emit("directMessage", message);
+      return;
+    }
+
+    /*- - - - - - - Suggestions - - - - - - -*/
+
+    
+        const suggestionData = await suggestionsSchema.findOne({
+          GuildID: message.guild.id,
+        });
+
+        if(suggestionData)  {
+    const{ guild, channel, content, member } = message
+    const cachedChannelID = message.guild.channels.cache.get(suggestionData.ChannelID);
+     if (message.author.bot) return;
+      if(message.channel.id === cachedChannelID.id) {
+
+        const embed = new Discord.MessageEmbed()
+        .setColor(m)
+        .setAuthor(message.author.tag, message.author.displayAvatarURL())
+        .setDescription(content)
+        .setTimestamp()
+
+        message.delete({ timeout: 100 })
+        .catch(err => {
+          return;
+        })
+
+        channel.send(embed)
+        .then((msg) => {
+          msg.react(`✅`);
+          msg.react(`⛔`);
+        })
+      }
+    } else if(!suggestionData) {
+    }
+    /*- - - - - - - Suggestions - - - - - - -*/
+
+
+    /*- - - - - - - AFK STUFF - - - - - - -*/
+    const mentioned = message.mentions.members.first();
+    if (mentioned) {
+      const data = await afk.findOne({
+        UserID: mentioned.id,
+      });
+
+      if (data) {
+        message.channel.send(
+          `**${mentioned.user.username}** is currently AFK. Reason: **${data.Reason}**`
+        );
+      }
+    }
+
+    const mainData = await afk.findOne({
+      UserID: message.author.id,
+    });
+
+    if (mainData) {
+      message.channel.send(
+        `**Welcome back!** I removed your AFK **${message.author.username}**.`
+      );
+      mainData.deleteOne({
+        UserID: message.author.id,
+      });
+      message.member.setNickname(null);
+    }
+    /*- - - - - - - AFK STUFF - - - - - - -*/
+
+
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -104,13 +147,18 @@ module.exports = {
       if (message.author.id == "462936117596127232") {
       } else {
         return message.channel.send(
-          `**${message.author.username}**, This command has been disabled by the developer`
+          `**${
+            message.author.username
+          }**, This command has been disabled by the developer • **Reason:** ${
+            command.reason != undefined ? command.reason : "No reason provided"
+          }`
         );
       }
     }
     const p = d.Prefix;
+
     try {
-      client.commands.get(command.name).execute(message, client, args, p);
+      client.commands.get(command.name).execute(message, client, args, p, m);
     } catch (err) {
       console.log(err);
 
@@ -123,3 +171,5 @@ module.exports = {
     }
   },
 };
+
+

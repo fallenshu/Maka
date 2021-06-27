@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const AFKSchema = new mongoose.Schema({
+    UserN : { type: String},
 	UserID: {
         type: String,
     },
@@ -9,4 +10,4 @@ const AFKSchema = new mongoose.Schema({
     } 
 });
 
-const MessageModel = module.exports = mongoose.model('Afk', AFKSchema);
+const MessageModel = module.exports = mongoose.model('AfkUsers', AFKSchema);

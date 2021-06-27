@@ -1,13 +1,15 @@
-const prefixSchema = require('../models/prefix')
+const prefixSchema = require("../models/prefix");
+
+
 module.exports = {
-    name: "guildCreate",
-    async execute(guild,client) {
-        
-        const newData = await prefixSchema.create({
-                GuildID: guild.id,
-                Prefix: "*"
-        }
-        )
-        console.log(`Created data for new guild ${guild.name}`)
-    }
-}
+  name: "guildCreate",
+  async execute(guild, client) {
+    const newData = await prefixSchema.create({
+      GuildID: guild.id,
+      Prefix: "*",
+    });
+
+
+    console.log(`Created data for new guild ${guild.name}`);
+  },
+};

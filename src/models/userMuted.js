@@ -6,4 +6,4 @@ const muteSchema = new mongoose.Schema({
     },
 })
 
-const mSchema = module.exports = mongoose.model('Muteed-Users', muteSchema)
+const mSchema = module.exports = mongoose.model('MutedUsers', muteSchema)

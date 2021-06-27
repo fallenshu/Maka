@@ -12,4 +12,4 @@ const muteSchema = new mongoose.Schema({
     },
 })
 
-const mSchema = module.exports = mongoose.model('MuteInfo', muteSchema)
+const mSchema = module.exports = mongoose.model('MuteRoles', muteSchema)

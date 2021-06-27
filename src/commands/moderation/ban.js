@@ -1,16 +1,14 @@
 const Discord = require("discord.js");
-const { m } = require("../../config.json");
-const main = m;
+
 
 module.exports = {
   name: "ban",
   desc: "Bans a user from the current server.",
   category: "Moderation",
-  async execute(message, client, args, p) {
-
-
+  async execute(message, client, args, p, m) {
+    const main = m;
     if (message.member.hasPermission("BAN_MEMBERS")) {
-      message.delete({ timeout: 1000 })
+      message.delete({ timeout: 1000 });
       const user =
         message.mentions.users.first() ||
         message.guild.members.cache.get(args[0]);

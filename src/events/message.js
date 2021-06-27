@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const prefixSchema = require("../models/prefix");
 const afk = require('../models/afk')
-const m = "6289e6";
+const m = "2f3136";
 const suggestionsSchema = require("../models/suggestions");
 
 module.exports = {

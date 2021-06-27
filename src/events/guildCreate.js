@@ -6,7 +6,7 @@ module.exports = {
   async execute(guild, client) {
     const newData = await prefixSchema.create({
       GuildID: guild.id,
-      Prefix: "*",
+      Prefix: ".",
     });
 
 

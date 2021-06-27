@@ -9,7 +9,7 @@ module.exports = {
   usage: "whois <@user>",
   category: "Information",
   async execute(message, client, args, p, m) {
-    const user = message.mentions.users.first() || message.author;
+ const user = message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.author;
     const member = message.guild.members.cache.get(user.id);
 
     let boostserv = member.premiumSince;
@@ -17,10 +17,9 @@ module.exports = {
 
     const embed = new Discord.MessageEmbed()
       .setAuthor(
-        `${user.username}#${user.discriminator}`,
-        user.displayAvatarURL()
+        `${member.user.tag}`, member.user.displayAvatarURL() || client.user.displayAvatarURL()
       )
-      .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setColor(m)
       .addFields(
         {

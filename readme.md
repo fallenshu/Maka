@@ -1,3 +1,3 @@
-Website • https://kojadb.net/
-Invite • https://kojadb.net/invite
-Discord Server • https://kojadb.net/discord
+Website • https://kojadb.net/ <br>
+Invite • https://kojadb.net/invite <br>
+Discord Server • https://kojadb.net/discord <br>

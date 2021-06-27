@@ -3,21 +3,21 @@ const { m } = require("../../config.json");
 const main = m;
 
 module.exports = {
-  name: "ban",
-  desc: "Bans a user from the current server.",
+  name: "kick",
+  desc: "Kick a user from the current server.",
   category: "Moderation",
   async execute(message, client, args, p) {
 
 
-    if (message.member.hasPermission("BAN_MEMBERS")) {
+    if (message.member.hasPermission("KICK_MEMBERS")) {
       message.delete({ timeout: 1000 })
       const user =
         message.mentions.users.first() ||
         message.guild.members.cache.get(args[0]);
 
-      if (message.guild.member(user).hasPermission("BAN_MEMBERS")) {
+      if (message.guild.member(user).hasPermission("KICK_MEMBERS")) {
         return message.channel.send(
-          `**${message.author.username}**, I can not ban this user as they have the \`BAN_MEMBERS\` permission.`
+          `**${message.author.username}**, I can not kick this user as they have the \`KICK_MEMBERS\` permission.`
         );
       }
 
@@ -29,13 +29,13 @@ module.exports = {
           message.guild.me.roles.highest.position
         )
           return message.channel.send(
-            `**${message.author.username}**, I can not ban that user because they have a higher role than my higher role or we have the same role.`
+            `**${message.author.username}**, I can not kick that user because they have a higher role than my higher role or we have the same role.`
           );
         if (
           member.roles.highest.position >= message.member.roles.highest.position
         )
           return message.channel.send(
-            `**${message.author.username}**, I can not ban that user because they have a higher or the same role than you.`
+            `**${message.author.username}**, I can not kick that user because they have a higher or the same role than you.`
           );
 
         let reason = args.slice(1).join(" ") || "No reason provided.";
@@ -43,18 +43,18 @@ module.exports = {
 
         if (member) {
           member
-            .ban({ reason: `${reason}` })
+            .kick({ reason: `${reason}` })
             .then(() => {
               message.channel.send(
-                `\`${user.id}\` • **${user.tag}** has been banned.`
+                `\`${user.id}\` • **${user.tag}** has been kicked.`
               );
             })
             .catch((err) => {
               console.log(err);
-              message.channel.send(`Error occured banning this user!`);
+              message.channel.send(`Error occured kicking this user!`);
             });
           member
-            .send(`You have been banned from ${message.guild.name} • ${reason}`)
+            .send(`You have been kicked from ${message.guild.name} • ${reason}`)
             .catch((err) => {
               return;
             });
@@ -65,12 +65,12 @@ module.exports = {
         }
       } else {
         return message.channel.send(
-          `**${message.author.username}**, Please mention a user for me to ban.`
+          `**${message.author.username}**, Please mention a user for me to kick.`
         );
       }
     } else {
       return message.channel.send(
-        `**${message.author.username}**, You are missing the \`BAN_MEMBERS\` permission that is needed to run this command.`
+        `**${message.author.username}**, You are missing the \`KICK_MEMBERS\` permission that is needed to run this command.`
       );
     }
   },

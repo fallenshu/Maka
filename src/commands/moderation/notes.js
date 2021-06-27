@@ -19,7 +19,7 @@ module.exports ={
                 .setAuthor( `Notes for ${message.guild.members.cache.get(user.id).user.tag}`, av)
                 .setDescription(`${data.map(d=>{
                     return d.Notes.map((n, i)=>
-                    `ID: \`${n.ID}\` • Note author: **${n.Author}**
+                    `ID: \`${n.noteID}\` • Note author: **${n.Author}**
                     **${n.Note}**\n\n`).join(" ")
                 })}`)
                 .setColor(m)

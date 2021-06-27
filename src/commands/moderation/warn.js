@@ -30,7 +30,7 @@ module.exports = {
                     Punshment: 'Warn',
                     Moderator: message.author.id,
                     Reason: reason ? reason: 'No reason provided.',
-                    WarnID: `${warnid}`
+                    WarnID: warnid
                 })
                 data.save()
 
@@ -44,7 +44,7 @@ module.exports = {
                         Punshment: 'Warn',
                         Moderator: message.author.id,
                         Reason: reason ? reason: 'No reason provided.',
-                        WarnID: `${warnid}`
+                        WarnID: warnid
                     }]
                 })
                 newData.save()
@@ -60,9 +60,9 @@ module.exports = {
 }
 
 function warnIDRandom() {
-    const ch = '1234567890qwertyuiopasdfghjklzxcvbnm';
+    const ch = '1234567890qwertyuiopasdfghjklzxcvbnm--';
     let str = '';
-    for (let index = 0; index <= 25; index++) {
+    for (let index = 0; index <= 15; index++) {
       str += ch[Math.floor(Math.random() * ch.length)];
     }
     return str;

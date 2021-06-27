@@ -27,7 +27,7 @@ module.exports ={
                 data.Notes.unshift({
                     Author: message.author.tag,
                     Note: note,
-                    ID: noteIDRandom()
+                    noteID: noteIDRandom()
                 })
                 data.save()
 
@@ -42,7 +42,7 @@ module.exports ={
                     Notes: [{
                         Author: message.author.tag,
                         Note: note,
-                        ID: noteIDRandom()
+                        noteID: noteIDRandom()
                     }]
                 })
 
@@ -60,9 +60,9 @@ module.exports ={
 }
 
 function noteIDRandom() {
-    const ch = '1234567890qwertyuiopasdfghjklzxcvbnm';
+    const ch = '1234567890qwertyuiopasdfghjklzxcvbnm--';
     let str = '';
-    for (let index = 0; index <= 25; index++) {
+    for (let index = 0; index <= 15; index++) {
       str += ch[Math.floor(Math.random() * ch.length)];
     }
     return str;

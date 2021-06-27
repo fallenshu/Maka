@@ -35,8 +35,8 @@ module.exports = {
             }
 
 
-            await warnSchema.updateOne({
-                $pull: {"Warns": {"WarnID": `${args[1]}`}}
+            await data.updateOne({
+                $pull: { "Warns" : { "WarnID" : `${args[1]}`}}
             })
 
             message.channel.send(`Deleted warn \`${args[1]}\` from **${message.guild.members.cache.get(user.id).user.tag}**`)
@@ -44,7 +44,7 @@ module.exports = {
         } else if(!data) {
 
 
-            message.channel.send(`**${message.author.username}**, Could not find any data for ${message.guild.members.cache.get(user.id).user.tag}`)
+            message.channel.send(`**${message.author.username}**, Could not find any data for **${message.guild.members.cache.get(user.id).user.tag}**`)
         }
     } else {
         return message.channel.send(`**${message.author.username}**, You are missing the \`KICK_MEMBERS\` permission that is needed to run this command.`)

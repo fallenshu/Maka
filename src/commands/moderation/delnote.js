@@ -9,7 +9,7 @@ module.exports = {
     desc: "Delete a note from a user.",
     category: 'Moderation',
     async execute(message, client, args, p) {
-        message.delete({ timeout: 100 })
+        
         if(message.member.hasPermission('ADMINISTRATOR')) {
             message.delete({ timeout: 100 })
 
@@ -37,7 +37,7 @@ module.exports = {
 
 
             await warnSchema.updateOne({
-                $pull: {"Notes": {"ID": `${args[1]}`}}
+                $pull: {"Notes": {"noteID": `${args[1]}`}}
             })
 
             message.channel.send(`Deleted note \`${args[1]}\` from **${message.guild.members.cache.get(user.id).user.tag}**`)

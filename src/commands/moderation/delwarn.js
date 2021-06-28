@@ -43,6 +43,16 @@ module.exports = {
           $pull: { Warns: { WarnID: `${args[1]}` } },
         });
 
+
+        client.modlogs({
+        Member: user.tag,
+        Action: 'Warn deleted.',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: `Delete warn ID: \`${args[1]}\``
+      }, message)
+
         message.channel.send(
           `Deleted warn \`${args[1]}\` from **${
             message.guild.members.cache.get(user.id).user.tag

@@ -53,6 +53,17 @@ module.exports = {
 
         message.channel.send(`Warned **${user.tag}**`);
       }
+
+
+      client.modlogs({
+        Member: user.tag,
+        Action: 'Warn',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: reason
+      }, message)
+      // AV, MODERATOR,
     } else {
       return message.channel.send(
         `**${message.author.username}**, You are missing the \`KICK_MEMBERS\` permission that is needed to run this command.`

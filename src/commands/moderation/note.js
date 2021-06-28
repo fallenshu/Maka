@@ -55,11 +55,23 @@ module.exports = {
         });
 
         newData.save();
+
+        
+       client.modlogs({
+        Member: args[0],
+        Action: 'Note Added.',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: note + ` - Note ID: \`${noteIDRandom()}\``
+      }, message)
+
         message.channel
           .send(`Added note to **${user.username}**.`)
           .then((msg) => {
             msg.delete({ timeout: 4000 });
           });
+
       }
     } else {
       return message.channel.send(

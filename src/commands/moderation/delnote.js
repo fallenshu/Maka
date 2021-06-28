@@ -49,6 +49,17 @@ module.exports = {
             message.guild.members.cache.get(user.id).user.tag
           }**`
         );
+
+
+         client.modlogs({
+        Member: user.tag,
+        Action: 'Note Deleted.',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: `Delete note ID: \`${args[1]}\``
+      }, message)
+
       } else if (!data) {
         message.channel.send(
           `**${message.author.username}**, Could not find any data for ${

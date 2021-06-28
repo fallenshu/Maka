@@ -30,11 +30,7 @@ module.exports = {
               return message.channel.send(e);
             }
 
-            if (args[0] != channel.toString()) {
-              return message.channel.send(
-                `**${message.author.username}**, Incorrect usage. \`${p}setwelcomemsg <channel> <welcomemsg>\``
-              );
-            }
+   
 
             if (!msg) {
               return message.channel.send(

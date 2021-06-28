@@ -20,6 +20,15 @@ module.exports = {
             .unban(args[0], { reason: `${reason}` })
             .then(() => {
               message.channel.send(`Unbanned \`${args[0]}\`.`);
+
+                    client.modlogs({
+        Member: args[0],
+        Action: 'Unban',
+        ID: args[0],
+        AV: client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: reason
+      }, message)
             })
             .catch((err) => {
               console.log(err);

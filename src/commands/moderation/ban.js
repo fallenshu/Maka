@@ -41,11 +41,20 @@ module.exports = {
 
         if (member) {
           member
-            .ban({ reason: `${reason}` })
+             .ban({ reason: `${reason}` })
             .then(() => {
               message.channel.send(
                 `\`${user.id}\` • **${user.tag}** has been banned.`
               );
+
+        client.modlogs({
+        Member: user.tag,
+        Action: 'Ban',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: reason
+      }, message)
             })
             .catch((err) => {
               console.log(err);

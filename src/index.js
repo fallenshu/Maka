@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
+
 const eventFiles = fs
   .readdirSync("./src/events")
   .filter((file) => file.endsWith(".js"));
@@ -47,7 +48,7 @@ mongoose
 
 
 client.on('guildMemberAdd', async (member) => {
-
+try {
  const mutedUser = require('./models/userMuted')
 const muteinfo = require('./models/mute')
 
@@ -82,6 +83,11 @@ if (data) {
   console.log(`Server did not have welcome message setup`)
 }
 
+
+} catch (err){
+    return;
+  } 
+ 
 /* const mData = await mutedUser.findOne({
   UserID: member.id
 })
@@ -107,8 +113,7 @@ return;
 })
 
 client.on("guildMemberRemove", async (member) => {
-
-  const leaveSchema = require("./models/leave");
+  try {  const leaveSchema = require("./models/leave");
 
   const data = await leaveSchema.findOne({
     GuildID: member.guild.id,
@@ -137,9 +142,85 @@ client.on("guildMemberRemove", async (member) => {
   } else if (!data) {
     console.log(`Server did not have leave message setup`);
   }
-
+  } catch (err){
+    return;
+  } 
  
 });
+
+
+const ModLogsSchema = require('./models/modlogs')
+client.modlogs = async function ({ Member, Action, Reason, ID, AV, MODERATOR,}, message){
+  const data = await ModLogsSchema.findOne({GuildID: message.guild.id})
+  if(!data) return;
+
+  const m = "2f3136";
+
+    const channel = message.guild.channels.cache.get(data.ChannelID)
+  /*
+  action = punish type
+  reason = reason
+  Member = mention punshed user
+  ID = member id
+  Moderator = moderator
+  Av = punished users avatar 
+  */
+    const embed = new Discord.MessageEmbed()
+  .setAuthor(`Punishment: ${Action}`, AV)
+  .setDescription(`
+  **Member:** ${Member} - \`${ID}\`
+  **Moderator:** ${MODERATOR}
+  **Action:** ${Action}
+  **Reason:** ${Reason || " "}`)
+  
+    .setColor(m)
+
+    channel.send(embed)
+}
+
+
+/* client.msgLogs = async function ({ Member, Content ,ID, AV, }, message){
+  const data = await ModLogsSchema.findOne({GuildID: message.guild.id})
+  if(!data) return;
+
+  const m = "2f3136";
+
+    const channel = message.guild.channels.cache.get(data.ChannelID)
+  
+  action = punish type
+  reason = reason
+  Member = mention punshed user
+  ID = member id
+  Moderator = moderator
+  Av = punished users avatar 
+  
+
+    const embed = new Discord.MessageEmbed()
+  .setAuthor(`Message Deleted`, AV)
+  .setDescription(`
+  **Member:** ${Member} - \`${ID}\`
+  **Message:** ${Content}`)
+  
+    .setColor(m)
+
+    channel.send(embed)
+}
+
+
+client.on('messageDelete', async (message) => {
+  
+        client.msgLogs({
+        Member: message.author.tag,
+        ID: message.author.id,
+        Content: message.content,
+        AV: message.author.displayAvatarURL() || client.user.displayAvatarURL(),
+      }, message)
+})
+*/
+
+
+
+
 
 
 client.login(process.env.TOKEN);

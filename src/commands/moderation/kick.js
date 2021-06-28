@@ -47,6 +47,15 @@ const main = m;
               message.channel.send(
                 `\`${user.id}\` • **${user.tag}** has been kicked.`
               );
+
+                                  client.modlogs({
+        Member: user.tag,
+        Action: 'Kick',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: reason
+      }, message)
             })
             .catch((err) => {
               console.log(err);

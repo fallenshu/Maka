@@ -65,6 +65,9 @@ module.exports = {
       member.setNickname(newnick);
     }
 
+    
+
+
     return;
   },
 };

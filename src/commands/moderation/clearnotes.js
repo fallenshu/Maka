@@ -23,6 +23,16 @@ module.exports = {
         });
 
         message.channel.send(`Deleted all notes for **${user.tag}**`);
+
+        client.modlogs({
+        Member: user.tag,
+        Action: 'Note note(s)',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: ` `
+      }, message)
+
       } else if (!data) {
         const r = [Math.floor(Math.random() * 50)];
 

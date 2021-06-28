@@ -30,9 +30,20 @@ module.exports = {
           `**${message.author.username}**, Deleted ${data.Warns.length} warn(s) from **${user.tag}**.`
         );
 
+        client.modlogs({
+        Member: user.tag,
+        Action: 'Clear warn(s)',
+        ID: user.id,
+        AV: user.displayAvatarURL() || client.user.displayAvatarURL(),
+        MODERATOR: message.author,
+        Reason: `Total warn(s) removed - ${data.Warns.Length}`
+      }, message)
+
         await warnSchema.findOneAndRemove({
           UserID: user.id,
         });
+
+        
       } else if (!data) {
         message.channel.send(
           `**${message.author.username}**, Cant find any warns for this user.`
